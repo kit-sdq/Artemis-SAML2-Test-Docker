@@ -1,7 +1,9 @@
 # Artemis Configuration SAML
 Test environment for SAML.
 
-** Instead of configuring the whole containers you can obtain a preconfigured data archive from the releases page or iff not present by writing an email **
+**IMPORTANT: It seems that gitlab is not able to start on MacOS if you use file system mapped volumes. So you may have to copy the contents for gitlab to a "real" volume**
+
+*Instead of configuring the whole containers you can obtain a preconfigured data archive from the releases page or iff not present by writing an email*
 
 ## Instructions for local testing
 
