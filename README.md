@@ -1,5 +1,5 @@
 # Artemis Configuration SAML
-Test environment for SAML.
+Test environment for the SAML2/Shibboleth Feature in [Artemis](https://github.com/ls1intum/Artemis).
 
 **IMPORTANT: It seems that gitlab is not able to start on MacOS if you use file system mapped volumes. So you may have to copy the contents for gitlab to a "real" volume**
 
