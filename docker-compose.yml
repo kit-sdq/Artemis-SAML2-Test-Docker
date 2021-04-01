@@ -39,9 +39,7 @@ services:
       - "${GITLAB_HTTPS_PORT}:443"
       - "${GITLAB_SSH_PORT}:22"
     environment:
-      - GITLAB_OMNIBUS_CONFIG=prometheus_monitoring['enable'] = false; gitlab_rails['monitoring_whitelist'] = ['0.0.0.0/0']
-    ports:
-      - "22:22"
+      - GITLAB_OMNIBUS_CONFIG=prometheus_monitoring['enable'] = false; nginx['listen_port'] = 80; gitlab_rails['monitoring_whitelist'] = ['0.0.0.0/0']
     networks:
       - artemis-net
 
