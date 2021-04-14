@@ -5,7 +5,7 @@ ARG ARTEMIS_VERSION=main
 ####################
 # Build stage      #
 ####################
-FROM openjdk:15-jdk-buster AS build
+FROM openjdk:16-jdk-buster AS build
 
 ENV LC_ALL C
 

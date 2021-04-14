@@ -5,7 +5,7 @@ ARG ARTEMIS_VERSION=main
 ####################
 # Build stage      #
 ####################
-FROM openjdk:15-jdk-buster AS build
+FROM openjdk:16-jdk-buster AS build
 
 ENV LC_ALL C
 
@@ -19,16 +19,16 @@ RUN echo "Building from $ARTEMIS_GIT_REPOSITORY" \
   && mkdir /build && cd /build \
   && git clone --depth 1 --branch $ARTEMIS_VERSION $ARTEMIS_GIT_REPOSITORY \
   && cd Artemis \
-  && ./gradlew build -x webpack -x test -x jacocoTestCoverageVerification
+  && ./gradlew clean bootWar -Pprod -Pwar -x webpack -x test -x jacocoTestCoverageVerification
 
 RUN cd /build/Artemis \
-  && mv /build/Artemis/build/libs/Artemis-$(./gradlew properties -q | grep "^version:" | awk '{print $2}').jar \
+  && mv /build/Artemis/build/libs/Artemis-$(./gradlew properties -q | grep "^version:" | awk '{print $2}').war \
   /build/Artemis/build/libs/Artemis.jar
 
 ####################
 # Execution stage  #
 ####################
-FROM openjdk:15-jdk-buster
+FROM openjdk:16-jdk-buster
 
 ARG ARTEMIS_VERSION
 ARG GOSU_VERSION=1.12
