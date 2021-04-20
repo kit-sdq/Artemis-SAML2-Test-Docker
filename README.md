@@ -1,13 +1,17 @@
 # Artemis Configuration SAML
 Test environment for the SAML2/Shibboleth Feature in [Artemis](https://github.com/ls1intum/Artemis).
 
-**IMPORTANT: It seems that gitlab is not able to start on MacOS if you use file system mapped volumes. So you may have to copy the contents for gitlab to a "real" volume**
-
 *Instead of configuring the whole containers you can obtain a preconfigured [data archive](https://github.com/kit-sdq/Artemis-SAML2-Test-Docker/releases/download/v4.11.2/data.7z) from the [releases page](https://github.com/kit-sdq/Artemis-SAML2-Test-Docker/releases) or iff not present by writing an email to "dominik (dot) fuchss (at) kit (dot) edu"*
 
 
-## For Linux Users
-You may have to 
+## Some interesting effects by OS
+
+### Mac OS
+It seems that gitlab is not able to start on MacOS if you use file system mapped volumes.
+So you may have to copy the contents for gitlab to a "real" volume
+
+### For Linux Users (especially WSL users)
+You may have to ..
 * use `find . -type f -print0 | xargs -0 dos2unix` to convert line endings to linux style (especially the docker folder)
 * use `chown 777 -R data` to fix any issues regarding the permissions of the data archive (data.7z) (only iff you use the archive)
 
