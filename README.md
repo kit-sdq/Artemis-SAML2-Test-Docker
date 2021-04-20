@@ -10,7 +10,7 @@ Test environment for the SAML2/Shibboleth Feature in [Artemis](https://github.co
 It seems that gitlab is not able to start on MacOS if you use file system mapped volumes.
 So you may have to copy the contents for gitlab to a "real" volume
 
-### For Linux Users (especially WSL users)
+### Linux Users (especially WSL users)
 You may have to ..
 * use `find . -type f -print0 | xargs -0 dos2unix` to convert line endings to linux style (especially the docker folder)
 * use `chown 777 -R data` to fix any issues regarding the permissions of the data archive (data.7z) (only iff you use the archive)
