@@ -44,6 +44,10 @@ server {
 
 
    location / {
+      if (-f /sync/waiting-backend) {
+          return 200 '<html><head><title>Artemis is updating</title></head><meta content="15" http-equiv="refresh"/><body><b>Artemis is currently updating .. please try again in 5 min</b></body></html>';
+          add_header Content-Type text/html;
+      }
       include /etc/nginx/proxy.conf;
       proxy_pass http://artemis-fe:80;
    }

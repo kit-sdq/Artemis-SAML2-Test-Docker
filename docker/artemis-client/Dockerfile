@@ -11,7 +11,7 @@ ENV LC_ALL C
 
 RUN echo "Installing prerequisites" \
   && apt-get update && apt-get install -y --no-install-recommends curl \
-  && curl -sL https://deb.nodesource.com/setup_15.x | bash - \
+  && curl -sL https://deb.nodesource.com/setup_14.x | bash - \
   && apt-get update && apt-get install -y --no-install-recommends \
   git \
   nodejs \

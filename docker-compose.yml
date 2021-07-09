@@ -9,6 +9,7 @@ services:
       - ./defaults/templates:/etc/nginx/templates
       - ./defaults/nginx.conf:/etc/nginx/nginx.conf
       - ./defaults/proxy.conf:/etc/nginx/proxy.conf
+      - ./.sync:/sync:ro
     ports:
       - "80:80"
     networks:
@@ -73,6 +74,7 @@ services:
     volumes:
       - ./data/artemis-be/config:/opt/Artemis/config
       - ./data/artemis-be/data:/opt/Artemis/data
+      - ./.sync:/opt/Artemis/sync
     environment:
       - WAIT_FOR="gitlab:80"
       - PROFILES=${PROFILES}
@@ -103,9 +105,8 @@ services:
     depends_on:
       - artemis-be
     volumes:
-      - ${CUSTOM_LOGO}:/usr/share/nginx/html/public/images/logo.png:ro
-      - ${CUSTOM_FAVICON}:/usr/share/nginx/html/public/images/favicon.ico:ro
       - ${CUSTOM_PRIVACY_STATEMENT}:/usr/share/nginx/html/public/content/privacy_statement.html:ro
+      - ${CUSTOM_IMPRINT}:/usr/share/nginx/html/public/content/imprint.html:ro
     environment:
       - SERVER_NAME=localhost
     networks:

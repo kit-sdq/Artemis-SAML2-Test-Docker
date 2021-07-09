@@ -9,8 +9,10 @@ else
    echo "Config is not empty .. not copying default configs .."
 fi
 
+# Ensure at least the directories are owned by artemis. -R takes too long
+chown artemis:artemis config data sync
 
-chown -R artemis:artemis config data
+touch sync/waiting-backend
 
 # Allow waiting for other services
 if [ -n "${WAIT_FOR}" ]; then
@@ -24,6 +26,9 @@ if [ -n "${WAIT_FOR}" ]; then
     done
   done
 fi
+
+# Release lock at nginx after 90 seconds
+bash -c "sleep 90 && rm -f sync/waiting-backend" &
 
 echo "Starting application..."
 exec gosu artemis java \
