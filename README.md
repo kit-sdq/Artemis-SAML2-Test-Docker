@@ -16,9 +16,11 @@ You may have to ..
 * use `chown 777 -R data` to fix any issues regarding the permissions of the data archive (data.7z) (only iff you use the archive)
 
 ## Instructions for local testing
+Note: You can choose whether you want a full build: manual-build.yml or a fast build (using the published war file): fast-build.yml
+
 
 1. Clone the repository
-2. Run `docker-compose up -d` and wait for the initial startup of the backend (config files will be copied). After that, stop the backend: `docker-compose stop artemis-be`
+2. Run `docker-compose -f base.yml -f [fast-build.yml|manual-build.yml] up -d` and wait for the initial startup of the backend (config files will be copied). After that, stop the backend: `docker-compose stop artemis-be`
 3. Configure Artemis with Jenkins and Gilab as usual. Setup SAML using the configuration file as follows:
 
 The application-saml2.yml must look like that:

@@ -1,0 +1,44 @@
+ARG DEBIAN_FRONTEND=noninteractive
+
+FROM openjdk:16-jdk-buster
+
+ARG ARTEMIS_VERSION
+ARG GOSU_VERSION=1.12
+ENV PROFILES=prod,jenkins,gitlab,artemis,scheduling
+ENV LC_ALL C
+
+RUN echo "Installing prerequisites" \
+  && apt-get update && apt-get install -y --no-install-recommends \
+  supervisor \
+  netcat \
+  graphviz \
+  zip \
+  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
+  && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch" \
+  && chmod +x /usr/local/bin/gosu \
+  && gosu nobody true
+
+COPY bootstrap.sh /bootstrap.sh
+COPY supervisord.conf /etc/supervisor/supervisord.conf
+COPY stop-supervisor.sh /usr/local/sbin/stop-supervisor.sh
+
+RUN mkdir -p /opt/Artemis/config /opt/Artemis/data /defaults/Artemis
+RUN wget -O /opt/Artemis/Artemis.jar https://github.com/ls1intum/Artemis/releases/download/$ARTEMIS_VERSION/Artemis.war
+
+# Deleting Client from JAR/WAR
+RUN zip --delete /opt/Artemis/Artemis.jar "WEB-INF/classes/public*"
+RUN zip --delete /opt/Artemis/Artemis.jar "WEB-INF/classes/static*"
+
+# Extracting default config
+RUN unzip /opt/Artemis/Artemis.jar "WEB-INF/classes/config*" -d /defaults/Artemis && mv /defaults/Artemis/WEB-INF/classes/config/* /defaults/Artemis/ && rm -r /defaults/Artemis/WEB-INF
+
+RUN chmod +x /bootstrap.sh \
+  /usr/local/sbin/stop-supervisor.sh \
+  /opt/Artemis/Artemis.jar \
+  && useradd -ms /bin/bash artemis
+
+VOLUME ["/opt/Artemis/config"]
+VOLUME ["/opt/Artemis/data"]
+EXPOSE 8080
+
+CMD exec /usr/bin/supervisord -c /etc/supervisor/supervisord.conf

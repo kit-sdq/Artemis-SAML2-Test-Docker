@@ -65,10 +65,9 @@ services:
       context: ./docker/artemis-server
       args:
         ARTEMIS_VERSION: ${ARTEMIS_VERSION}
-        ARTEMIS_GIT_REPOSITORY: ${ARTEMIS_GIT_REPOSITORY}
     restart: unless-stopped
     depends_on:
-      - db
+      - artemis-db
       - gitlab
       - jenkins
     volumes:
@@ -78,14 +77,15 @@ services:
     environment:
       - WAIT_FOR="gitlab:80"
       - PROFILES=${PROFILES}
+      - SPRING_DATASOURCE_URL=jdbc:mysql://artemis-db:3306/Artemis?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
     networks:
       - artemis-net
 
-  db:
+  artemis-db:
     image: mysql:8.0.23
     restart: unless-stopped
     volumes:
-      - ./data/db:/var/lib/mysql
+      - ./data/artemis-db:/var/lib/mysql
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_DATABASE=Artemis
@@ -100,13 +100,13 @@ services:
       context: ./docker/artemis-client
       args:
         ARTEMIS_VERSION: ${ARTEMIS_VERSION}
-        ARTEMIS_GIT_REPOSITORY: ${ARTEMIS_GIT_REPOSITORY}
     restart: unless-stopped
     depends_on:
       - artemis-be
     volumes:
       - ${CUSTOM_PRIVACY_STATEMENT}:/usr/share/nginx/html/public/content/privacy_statement.html:ro
       - ${CUSTOM_IMPRINT}:/usr/share/nginx/html/public/content/imprint.html:ro
+      - ${CUSTOM_ABOUT}:/usr/share/nginx/html/public/content/about-us.json:ro
     environment:
       - SERVER_NAME=localhost
     networks:

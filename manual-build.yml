@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  artemis-be:
+    build:
+      dockerfile: Dockerfile.manual
+      args:
+        ARTEMIS_GIT_REPOSITORY: ${ARTEMIS_GIT_REPOSITORY}
+
+
+  artemis-fe:
+    build:
+      dockerfile: Dockerfile.manual
+      args:
+        ARTEMIS_GIT_REPOSITORY: ${ARTEMIS_GIT_REPOSITORY}
