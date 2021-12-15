@@ -16,7 +16,7 @@ RUN rm -f Artemis.zip
 
 # Cleanup Client
 RUN rm -r WEB-INF/classes/public/images/about WEB-INF/classes/public/content/about-us.json WEB-INF/classes/public/content/imprint.html WEB-INF/classes/public/content/privacy_statement.html
-RUN rm WEB-INF/classes/static/report.html WEB-INF/classes/static/stats.json
+RUN rm -f WEB-INF/classes/static/report.html WEB-INF/classes/static/stats.json
 
 # Copy Client
 RUN mv WEB-INF/classes/public WEB-INF/classes/static/public && mv WEB-INF/classes/static/* /usr/share/nginx/html/
