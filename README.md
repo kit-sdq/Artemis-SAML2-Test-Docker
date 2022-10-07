@@ -20,7 +20,7 @@ Note: You can choose whether you want a full build: manual-build.yml or a fast b
 
 
 1. Clone the repository
-2. Run `docker-compose -f base.yml -f [fast-build.yml|manual-build.yml] up -d` and wait for the initial startup of the backend (config files will be copied). After that, stop the backend: `docker-compose -f base.yml -f [fast-build.yml|manual-build.yml] stop artemis-be`
+2. Run `docker compose up -d` and wait for the initial startup of the backend (config files will be copied). After that, stop the backend: `docker-compose stop artemis`
 3. Configure Artemis with Jenkins and Gilab as usual. Setup SAML using the configuration file as follows:
 
 The application-saml2.yml must look like that:
@@ -43,6 +43,6 @@ info.saml2.enable-password: true
 ```
 
 4. (Enable Debug output)
-5. Start the stack using ` docker-compose -f base.yml -f [fast-build.yml|manual-build.yml] up -d`
+5. Start the stack using ` docker-compose up -d`
 6. Log in with SAML2 using `user1` and `user1pass`
 7. User mail addresses are fixed, testing is in this configuration only possible when overwriting the user information in the SAML docker. 

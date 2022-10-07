@@ -13,43 +13,39 @@ server {
    # Proxy API requests
    location /api {
       include /etc/nginx/proxy.conf;
-      proxy_pass http://artemis-be:8080/api;
+      proxy_pass http://artemis:8080/api;
    }
    location /management {
       include /etc/nginx/proxy.conf;
-      proxy_pass http://artemis-be:8080/management;
+      proxy_pass http://artemis:8080/management;
    }       
    location /v2 {
       include /etc/nginx/proxy.conf;
-      proxy_pass http://artemis-be:8080/v2;
+      proxy_pass http://artemis:8080/v2;
    }
    location /time {
       include /etc/nginx/proxy.conf;
-      proxy_pass http://artemis-be:8080/time;
+      proxy_pass http://artemis:8080/time;
    }
    location /saml2 {
       include /etc/nginx/proxy.conf;
-      proxy_pass http://artemis-be:8080/saml2;
+      proxy_pass http://artemis:8080/saml2;
    }
    location /login {
       include /etc/nginx/proxy.conf;
-      proxy_pass http://artemis-be:8080/login;
+      proxy_pass http://artemis:8080/login;
    }
 
    location /websocket {
       include /etc/nginx/proxy.conf;
-      proxy_pass http://artemis-be:8080/websocket;
+      proxy_pass http://artemis:8080/websocket;
       proxy_pass_header X-XSRF-TOKEN;
    }
 
 
    location / {
-      if (-f /sync/waiting-backend) {
-          return 200 '<html><head><title>Artemis is updating</title></head><meta content="15" http-equiv="refresh"/><body><b>Artemis is currently updating .. please try again in 5 min</b></body></html>';
-          add_header Content-Type text/html;
-      }
       include /etc/nginx/proxy.conf;
-      proxy_pass http://artemis-fe:80;
+      proxy_pass http://artemis:8080;
    }
 }
 
