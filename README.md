@@ -12,8 +12,10 @@ So you may have to copy the contents for gitlab to a "real" volume
 
 ### Linux Users (especially WSL users)
 You may have to ..
-* use `find . -type f -print0 | xargs -0 dos2unix` to convert line endings to linux style (especially the docker folder)
-* use `chmod 777 -R data` to fix any issues regarding the permissions of the data archive (data.7z) (only iff you use the archive)
+* run all commands as root esp. `tar xzf data.tgz`
+* You may have to use ..
+    * use `find . -type f -print0 | xargs -0 dos2unix` to convert line endings to linux style (especially the docker folder)
+    * use `chmod 777 -R data` to fix any issues regarding the permissions of the data archive (data.7z) (only iff you use the archive)
 
 ## Instructions for local testing
 
