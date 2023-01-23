@@ -41,6 +41,6 @@ info.saml2.enable-password: true
 ```
 
 4. (Enable Debug output)
-5. Start the stack using ` docker-compose up -d`
+5. Start the stack using `docker compose up -d`
 6. Log in with SAML2 using `user1` and `user1pass`
 7. User mail addresses are fixed, testing is in this configuration only possible when overwriting the user information in the SAML docker. 
