@@ -1,7 +1,7 @@
 # Artemis Configuration SAML
 Test environment for the SAML2/Shibboleth Feature in [Artemis](https://github.com/ls1intum/Artemis).
 
-*Instead of configuring the whole containers you can obtain a preconfigured [data archive](https://github.com/kit-sdq/Artemis-SAML2-Test-Docker/releases/download/v5.1.3/data.tar.gz) from the [releases page](https://github.com/kit-sdq/Artemis-SAML2-Test-Docker/releases) or iff not present by writing an email to "dominik (dot) fuchss (at) kit (dot) edu"*
+*Instead of configuring the whole containers you can obtain a preconfigured data archive from the [releases page](https://github.com/kit-sdq/Artemis-SAML2-Test-Docker/releases) or iff not present by writing an email to "dominik (dot) fuchss (at) kit (dot) edu"*
 
 
 ## Some interesting effects by OS
