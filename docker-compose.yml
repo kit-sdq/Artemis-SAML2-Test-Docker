@@ -10,8 +10,6 @@ services:
     depends_on:
       artemis:
         condition: service_started
-      gitlab:
-        condition: service_started
       jenkins:
         condition: service_started
     ports:
@@ -29,24 +27,6 @@ services:
       - ./saml/config.php:/var/www/simplesamlphp/config/config.php
     networks:
       - artemis-net  
-
-  gitlab:
-    build:
-      context: ./docker/gitlab
-      args:
-          GITLAB_VERSION: ${GITLAB_VERSION}
-    restart: unless-stopped
-    volumes:
-      - ./data/gitlab/config:/etc/gitlab
-      - ./data/gitlab/logs:/var/log/gitlab
-      - ./data/gitlab/data:/var/opt/gitlab
-    ports:
-      - "${GITLAB_HTTP_PORT}:80"
-      - "${GITLAB_SSH_PORT}:22"
-    environment:
-      - GITLAB_OMNIBUS_CONFIG=prometheus_monitoring['enable'] = false; nginx['listen_port'] = 80; gitlab_rails['monitoring_whitelist'] = ['0.0.0.0/0']
-    networks:
-      - artemis-net
 
   jenkins:
     image: jenkins/jenkins:lts
@@ -69,10 +49,10 @@ services:
     depends_on:
       artemis-db:
         condition: service_started
-      gitlab:
-        condition: service_healthy
       jenkins:
         condition: service_started
+    ports:
+      - 8080:8080
     volumes:
       - ./data/artemis-be/config:/opt/artemis/config
       - ./data/artemis-be/data:/opt/artemis/data
@@ -84,14 +64,14 @@ services:
       - artemis-net
 
   artemis-db:
-    image: mysql:8.0.23
+    image: mysql:8
     restart: unless-stopped
     volumes:
       - ./data/artemis-db:/var/lib/mysql
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_DATABASE=Artemis
-    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --collation-server=utf8mb4_unicode_ci --explicit_defaults_for_timestamp
+    command: mysqld --lower_case_table_names=1 --character_set_server=utf8mb4 --collation-server=utf8mb4_unicode_ci --explicit_defaults_for_timestamp
     networks:
       - artemis-net
     cap_add:
