@@ -1,27 +1,20 @@
 # Artemis Configuration SAML
 Test environment for the SAML2/Shibboleth Feature in [Artemis](https://github.com/ls1intum/Artemis).
 
-*Instead of configuring the whole containers you can obtain a preconfigured data archive from the [releases page](https://github.com/kit-sdq/Artemis-SAML2-Test-Docker/releases) or iff not present by writing an email to "dominik (dot) fuchss (at) kit (dot) edu"*
+*Instead of configuring the whole containers you can obtain a preconfigured data archive from the [releases page](https://github.com/kit-sdq/Artemis-SAML2-Test-Docker/releases)*
 
 
 ## Some interesting effects by OS
 
-### Mac OS
-It seems that gitlab is not able to start on MacOS if you use file system mapped volumes.
-So you may have to copy the contents for gitlab to a "real" volume
-
-### Linux Users (especially WSL users)
+### Linux Users
 You may have to ..
-* run all commands as root esp. `tar xzf data.tgz`
-* You may have to use ..
-    * use `find . -type f -print0 | xargs -0 dos2unix` to convert line endings to linux style (especially the docker folder)
-    * use `chmod 777 -R data` to fix any issues regarding the permissions of the data archive (data.7z) (only iff you use the archive)
+* run all commands as root esp. `tar xzf data.tgz` to ensure that permissions are correct
 
 ## Instructions for local testing
 
 1. Clone the repository
 2. Run `docker compose up -d` and wait for the initial startup of the backend (config files will be copied). After that, stop the backend: `docker-compose stop artemis`
-3. Configure Artemis with Jenkins and Gilab as usual. Setup SAML using the configuration file as follows:
+3. Configure Artemis with Jenkins as usual. Setup SAML using the configuration file as follows:
 
 The application-saml2.yml must look like that:
 ```yaml
