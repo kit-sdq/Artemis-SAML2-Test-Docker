@@ -5,7 +5,7 @@
  * See: https://simplesamlphp.org/docs/stable/simplesamlphp-reference-sp-remote
  */
 
-$metadata['artemis'] = array(
+$metadata['http://localhost/saml2/service-provider-metadata/testidp'] = array(
     /*Set registration id to testidp*/
     'AssertionConsumerService' => 'http://localhost/login/saml2/sso/testidp',
     'SingleLogoutService' => getenv('SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE'),
